@@ -25,12 +25,12 @@ Using macro to replace 'new int' into `'new(__FILE__,__LINE__) int'` and overrid
 * It does not work on placement new.
 
 ``` c++
-    int* x = new(std::nothorw) int; // this one won't work
+    int* x = new(std::nothrow) int; // this one won't work
 ```
     
 ## Solution 2 
 
-Replace 'new int' into `'Memleak(__FILE__,__LINE__) << new'` and overload operator << in Memleak class.
+Replace `'new int'` with `'Memleak(__FILE__,__LINE__) << new int'` and overload operator << in Memleak class.
 
 ``` c++
 class Memleak
@@ -78,15 +78,14 @@ public:
     template <class T>
     T * operator << (T* t) const
     {
-        MemleakRecorder::instance().alloc(file_, line_, t);
+        // allocate memory and keep track file_, line_, t
         return t;
     }
 
     template <class T>
     T * operator >> (T* t) const
     {
-        MemleakRecorder::instance().release(t);
-        delete t;
+        // delete memory and keep track of file_, line_, t
         return t;
     }
 
@@ -109,7 +108,7 @@ The keyword 'delete' is not only for deleting dynamic object usage. For example:
     public:
         // 'delete' will be replaced by macro,
         // this kind of syntax happens a lot in STL,
-        // it almost not possible to avoid.
+        // it almost not possible to avoid it.
         MyClass(MyClass const&) = delete;
     };
 ```

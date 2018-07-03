@@ -2,7 +2,7 @@
 
 ## Solution 1
 
-Using macro to replace 'new int' into 'new(__FILE__,__LINE) int' and override the 'new(size_t, const char*, int)'
+Using macro to replace 'new int' into `'new(__FILE__,__LINE__) int'` and override the 'new(size_t, const char*, int)'
 
 ``` c++
     void* operator new(size_t size, const char* file, int line) {...};
@@ -30,7 +30,7 @@ Using macro to replace 'new int' into 'new(__FILE__,__LINE) int' and override th
     
 ## Solution 2 
 
-Replace 'new int' into 'Memleak(__FILE__,__LINE__) << new' and overload operator << in Memleak class.
+Replace 'new int' into `'Memleak(__FILE__,__LINE__) << new'` and overload operator << in Memleak class.
 
 ``` c++
 class Memleak
@@ -67,7 +67,7 @@ It does not work when delete an class object, like this:
 
 ## Solution 3
 
-Similar to solution 2, but also replace 'delete x' into 'Memleak(__FILE__,__LINE__) >>' and overload operator >> in Memleak class.
+Similar to solution 2, but also replace 'delete x' into `'Memleak(__FILE__,__LINE__) >>'` and overload operator >> in Memleak class.
 
 ``` c++
 class Memleak
@@ -139,7 +139,7 @@ public:
 
 ### Problem:
 
-Debug information such as __FILE__ and __LINE__ only provides information that not very useful. We know which class has memory leak but does not know where it had been created.
+Debug information such as `__FILE__` and `__LINE__` only provides information that not very useful. We know which class has memory leak but does not know where it had been created.
 
 ## Conclusion
 

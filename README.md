@@ -1,6 +1,8 @@
 # Detect memory leak in C++ using macro and operator overriding
 
-## Solution 1 - Using macro to replace 'new int' into 'new(__FILE__,__LINE) int' and override the 'new(size_t, const char*, int)'
+## Solution 1
+
+Using macro to replace 'new int' into 'new(__FILE__,__LINE) int' and override the 'new(size_t, const char*, int)'
 
 ``` c++
     void* operator new(size_t size, const char* file, int line) {...};
@@ -26,7 +28,9 @@
     int* x = new(std::nothorw) int; // this one won't work
 ```
     
-## Solution 2 - Replace 'new int' into 'Memleak(__FILE__,__LINE__) << new' and overload operator << in Memleak class.
+## Solution 2 
+
+Replace 'new int' into 'Memleak(__FILE__,__LINE__) << new' and overload operator << in Memleak class.
 
 ``` c++
 class Memleak
@@ -61,7 +65,9 @@ It does not work when delete an class object, like this:
     delete cls; // this one calls class' static delete member instead of global
 ```
 
-## Solution 3: Similar to solution 2, but also replace 'delete x' into 'Memleak(__FILE__,__LINE__) >>' and overload operator >> in Memleak class.
+## Solution 3
+
+Similar to solution 2, but also replace 'delete x' into 'Memleak(__FILE__,__LINE__) >>' and overload operator >> in Memleak class.
 
 ``` c++
 class Memleak
@@ -108,7 +114,9 @@ The keyword 'delete' is not only for deleting dynamic object usage. For example:
     };
 ```
 
-## Solution 4: Override both global and in-class new/delete operator
+## Solution 4
+
+Override both global and in-class new/delete operator
 
 ``` c++
 void* operator new(size_t size) {...}

@@ -143,4 +143,4 @@ Debug information such as __FILE__ and __LINE__ only provides information that n
 
 ## Conclusion
 
-Personally I uses solution 3 for the project that does not have it own memory pool at beginning. Although debug information is not enough, but better than nothing.
+Personally I uses solution 4 for the project that does not have it own memory pool at beginning. Although debug information is not enough, but better than nothing.
